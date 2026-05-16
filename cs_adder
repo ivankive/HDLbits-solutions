@@ -1,0 +1,23 @@
+module top_module(
+    input [31:0] a,
+    input [31:0] b,
+    output [31:0] sum
+);
+    logic wire1;
+    logic [15:0] wire2, wire3;
+    
+    add16 Firstadd16    ( .a(a[15:0]),  .b(b[15:0]),  .cin(1'b0),  .sum(sum[15:0]),     .cout(wire1) );
+    add16 WithZeroadd16 ( .a(a[31:16]), .b(b[31:16]), .cin(1'b0),  .sum(wire2),       	    .cout() );
+    add16 WithOneadd16  ( .a(a[31:16]), .b(b[31:16]), .cin(1'b1),  .sum(wire3),	        .cout() );
+    
+    
+    always_comb begin
+        
+        case(wire1)
+            0: sum[31:16] = wire2;
+            1: sum[31:16] = wire3;
+       
+        endcase
+    end
+     
+endmodule
